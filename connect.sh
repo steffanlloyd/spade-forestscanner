@@ -1,0 +1,1 @@
+docker exec -it forestscanner-ros1 /bin/bash

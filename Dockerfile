@@ -34,6 +34,7 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Change access of the ros user. Add to i2c group
 RUN usermod -aG i2c ros
+RUN usermod -aG dialout ros
 
 # Run geographiclib
 WORKDIR /home/ros
@@ -46,8 +47,8 @@ RUN wget https://raw.githubusercontent.com/mavlink/mavros/ros2/mavros/scripts/in
 RUN git clone https://github.com/Livox-SDK/Livox-SDK2.git
 WORKDIR /home/ros/Livox-SDK2/
 RUN mkdir build
-# WORKDIR /home/ros/Livox-SDK2/build/
-# RUN cmake .. && make -j && make install
+WORKDIR /home/ros/Livox-SDK2/build/
+RUN cmake .. && make && make install
 
 # Set the container's environment variables to enable rviz and others
 ENV QT_X11_NO_MITSHM=1
@@ -59,12 +60,9 @@ COPY ./docker/bashrc.txt /home/${USERNAME}/.bashrc
 USER ros
 WORKDIR /home/ros/ros1_ws
 RUN rosdep update
-USER root/
 
-WORKDIR /home/ros/
+USER root
 
 ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
 
 CMD ["bash"]
-
-# docker compose run --service-ports --build --remove-orphans skyplanter-ros bash
