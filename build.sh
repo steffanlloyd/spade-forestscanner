@@ -1,0 +1,1 @@
+docker build -t forestscanner-ros1:latest -f Dockerfile .
