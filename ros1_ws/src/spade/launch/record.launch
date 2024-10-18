@@ -2,9 +2,7 @@
 
   <include file="$(find mavros)/launch/px4.launch" />
 
-  <include file="$(find livox_ros_driver2)/launch_ROS1/msg_MID360.launch" />
-
-  <node name="livox_to_pointcloud2_node" pkg="livox_to_pointcloud2" type="livox_to_pointcloud2_node" output="screen" />
+  <include file="$(find spade)/launch/msg_MID360.launch" />
 
   <node name="record" pkg="rosbag" type="record" args="record -a -o /home/ros/rosbags/bag" output="screen" />
 

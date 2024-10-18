@@ -1,3 +1,5 @@
+xhost +local:root
+
 docker run -itd \
   --name="forestscanner-ros1" \
   --rm \

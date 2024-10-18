@@ -34,7 +34,8 @@ ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 RUN groupadd --gid $USER_GID $USERNAME \ 
     && useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME \
-    && mkdir /home/$USERNAME/.config && chown $USER_UID:$USER_GID /home/$USERNAME/.config
+    && mkdir /home/$USERNAME/.config && chown $USER_UID:$USER_GID /home/$USERNAME/.config \
+    && chown -R $USER_UID:$USER_GID /home/$USERNAME
 
 # Add sudo privelidges
 RUN echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME\
@@ -48,6 +49,7 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 # Change access of the ros user. Add to i2c group
 RUN usermod -aG i2c ros
 RUN usermod -aG dialout ros
+RUN 
 
 # Add more extra programs
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -62,7 +64,7 @@ COPY ./docker/bashrc.txt /home/${USERNAME}/.bashrc
 
 # Update ROS dependencies
 # USER ros
-# WORKDIR /home/ros/ros1_ws
+WORKDIR /home/ros/ros1_ws
 # RUN rosdep update
 
 USER root
