@@ -17,7 +17,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
   #INCLUDE_DIRS include
   #LIBRARIES spade
-  CATKIN_DEPENDS roscpp fast_lio livox_ros_driver2
+  CATKIN_DEPENDS roscpp livox_ros_driver2 mavros
   #DEPENDS system_lib
 )
 

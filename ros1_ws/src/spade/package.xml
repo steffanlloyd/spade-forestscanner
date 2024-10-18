@@ -17,8 +17,8 @@
 
   <!-- Use depend as a shortcut for packages that are both build and exec dependencies -->
   <depend>roscpp</depend>
-  <depend>fast_lio</depend>
   <depend>livox_ros_driver2</depend>
+  <depend>mavros</depend>
   <buildtool_depend>catkin</buildtool_depend>
 
 
