@@ -69,6 +69,7 @@ COPY ./docker/entrypoint.sh /entrypoint.sh
 COPY ./docker/bashrc.txt /home/${USERNAME}/.bashrc
 RUN mkdir /home/${USERNAME}/scripts/
 COPY ./docker/init_docker.sh /home/${USERNAME}/scripts/init.sh
+RUN chmod +x /home/${USERNAME}/scripts/init.sh
 
 # Update ROS dependencies
 USER ros

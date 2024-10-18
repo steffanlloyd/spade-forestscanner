@@ -6,9 +6,11 @@ To install
 ```bash
 git clone --recurse-submodules git@gitlab.nibio.no:spade/forest-scanner-ros1.git
 
-# Build docker
+# Build docker and make workspace
 ./scripts/init.sh
 ```
+After this, you should be able to just call `catkin_make` normally.
+
 If you cloned it without the `--recurse-submodules` tag, you can fix with
 ```bash
 git submodule update --init --recursive
