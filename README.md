@@ -5,6 +5,9 @@ ROS1 workspace for below-canopy drone.
 To install
 ```bash
 git clone --recurse-submodules git@gitlab.nibio.no:spade/forest-scanner-ros1.git
+
+# Build docker
+./scripts/init.sh
 ```
 If you cloned it without the `--recurse-submodules` tag, you can fix with
 ```bash

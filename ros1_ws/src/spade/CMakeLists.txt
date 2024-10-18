@@ -7,8 +7,8 @@ project(spade)
 ## Find catkin macros and libraries
 find_package(catkin REQUIRED COMPONENTS
   roscpp
+  fast_lio
   livox_ros_driver2
-  livox_to_pointcloud2
 )
 
 ###################################
@@ -17,7 +17,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
   #INCLUDE_DIRS include
   #LIBRARIES spade
-  CATKIN_DEPENDS roscpp livox_ros_driver2 livox_to_pointcloud2
+  CATKIN_DEPENDS roscpp fast_lio livox_ros_driver2
   #DEPENDS system_lib
 )
 

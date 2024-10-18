@@ -21,12 +21,18 @@ RUN wget https://raw.githubusercontent.com/mavlink/mavros/ros2/mavros/scripts/in
     && ./install_geographiclib_datasets.sh \
     && rm install_geographiclib_datasets.sh
 
-# Install Livox SDK
+# Install Livox SDK and Livox SDK2
+RUN mkdir libraries
+WORKDIR /home/ros/libraries/
 RUN git clone https://github.com/Livox-SDK/Livox-SDK2.git
-WORKDIR /home/ros/Livox-SDK2/
+RUN git clone https://github.com/Livox-SDK/Livox-SDK.git
+WORKDIR /home/ros/libraries/Livox-SDK2/
 RUN mkdir build
-WORKDIR /home/ros/Livox-SDK2/build/
+WORKDIR /home/ros/libraries/Livox-SDK2/build/
 RUN cmake .. && make && make install
+WORKDIR /home/ros/libraries/Livox-SDK/build/
+RUN cmake .. && make && make install
+WORKDIR /home/ros
 
 # Setup user. The USER_UID needs to match the user of the host computer! That way the files won't have access issues.
 ARG USERNAME=ros
@@ -61,11 +67,13 @@ ENV QT_X11_NO_MITSHM=1
 
 COPY ./docker/entrypoint.sh /entrypoint.sh
 COPY ./docker/bashrc.txt /home/${USERNAME}/.bashrc
+RUN mkdir /home/${USERNAME}/scripts/
+COPY ./docker/init_docker.sh /home/${USERNAME}/scripts/init.sh
 
 # Update ROS dependencies
-# USER ros
+USER ros
 WORKDIR /home/ros/ros1_ws
-# RUN rosdep update
+RUN rosdep update
 
 USER root
 
