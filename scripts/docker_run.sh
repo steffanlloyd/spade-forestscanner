@@ -1,3 +1,4 @@
+#!/bin/bash
 # Connect display, if there is a display
 if [ -n "$DISPLAY" ]; then
     xhost +local:root

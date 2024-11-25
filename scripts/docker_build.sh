@@ -1,3 +1,4 @@
+#!/bin/bash
 
 # Stop docker, if running
 if [ "$(docker ps -q -f name=forestscanner-ros1)" ]; then

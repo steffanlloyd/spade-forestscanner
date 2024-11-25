@@ -1,0 +1,11 @@
+[Unit]
+Description=Startup network commands to enable LiDAR connection
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash /home/spade/workspaces/forest-scanner-ros1/scripts/setup_network.sh
+
+[Install]
+WantedBy=multi-user.target

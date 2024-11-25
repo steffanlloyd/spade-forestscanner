@@ -1,3 +1,4 @@
+#!/bin/bash
 git submodule update --init --recursive
 
 $(dirname "$0")/docker_build.sh

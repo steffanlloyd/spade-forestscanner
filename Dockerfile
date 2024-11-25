@@ -12,6 +12,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     wget \
     cmake \ 
     ros-melodic-mavros \
+    ros-melodic-mavros-extras \
+    iproute2 inetutils-ping \
     && rm -rf /var/lib/apt/lists/*
 
 # Run geographiclib
@@ -25,12 +27,9 @@ RUN wget https://raw.githubusercontent.com/mavlink/mavros/ros2/mavros/scripts/in
 RUN mkdir libraries
 WORKDIR /home/ros/libraries/
 RUN git clone https://github.com/Livox-SDK/Livox-SDK2.git
-RUN git clone https://github.com/Livox-SDK/Livox-SDK.git
 WORKDIR /home/ros/libraries/Livox-SDK2/
 RUN mkdir build
 WORKDIR /home/ros/libraries/Livox-SDK2/build/
-RUN cmake .. && make && make install
-WORKDIR /home/ros/libraries/Livox-SDK/build/
 RUN cmake .. && make && make install
 WORKDIR /home/ros
 
@@ -55,11 +54,12 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 # Change access of the ros user. Add to i2c group
 RUN usermod -aG i2c ros
 RUN usermod -aG dialout ros
-RUN 
+RUN usermod -aG tty ros
 
 # Add more extra programs
 RUN apt-get update && apt-get install -y --no-install-recommends \
     nano \
+    tree \
     && rm -rf /var/lib/apt/lists/*
 
 # Set the container's environment variables to enable rviz and others

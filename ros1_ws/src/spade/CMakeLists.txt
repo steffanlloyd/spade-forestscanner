@@ -7,7 +7,6 @@ project(spade)
 ## Find catkin macros and libraries
 find_package(catkin REQUIRED COMPONENTS
   roscpp
-  fast_lio
   livox_ros_driver2
 )
 
