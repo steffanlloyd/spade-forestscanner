@@ -2,6 +2,8 @@
 
 ROS1 workspace for below-canopy drone.
 
+[Drone assembly and setup instructions here.](docs/DroneSetup.md)
+
 To install
 ```bash
 git clone --recurse-submodules git@gitlab.nibio.no:spade/forest-scanner-ros1.git
