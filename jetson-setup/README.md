@@ -1,6 +1,6 @@
 # Jetson Setup
 
-This is a guide on how to enable all the functionality of the Jetson from a fresh flash
+This is a guide on how to enable all the functionality of the Jetson from a fresh flash. If you just received the drone, it is already set up likely! Only follow this guide if you need to re-flash the drone.
 
 ## Flashing the Jetson
 
