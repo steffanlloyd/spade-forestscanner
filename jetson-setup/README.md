@@ -83,6 +83,8 @@ sudo nano ~/.ssh/authorized_keys
 ### Setup ethernet connection for LiDAR
 The script `scripts/setup-network.sh` is required to be run at startup to assign a fixed IP address to the ethernet port. Once you set this up, the port won't be available for internet connection, so do this last.
 
+Note, the code below will set this up manually, however you can also just run the `scripts/init.sh` script and this will be done automatically. To re-do this, you can also just run `./scripts/install_network-setup_service.sh`.
+
 Assuming your working directory is the root of this repository:
 ```bash
 # Install the service
