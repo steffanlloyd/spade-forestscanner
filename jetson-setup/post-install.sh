@@ -8,15 +8,15 @@ echo "Done installing software."
 
 # Install docker
 echo "Installing and setting up docker"
-bash $(dirname "$0")/scripts/docker_install.sh
+bash $(dirname "$0")/../scripts/docker_install.sh
 echo "Done installing docker."
 
 # Install nomachine
 # Best to look up a more recent updated link from https://downloads.nomachine.com/linux/?distro=Arm&id=30
 echo "Installing NoMachine"
-wget https://download.nomachine.com/download/8.14/Arm/nomachine_8.14.2_1_armhf.deb
-sudo dpkg -i nomachine_8.14.2_1_armhf.deb
-rm nomachine_8.14.2_1_armhf.deb
+wget https://download.nomachine.com/download/8.14/Arm/nomachine_8.14.2_1_arm64.deb
+sudo dpkg -i nomachine_8.14.2_1_arm64.deb
+rm nomachine_8.14.2_1_arm64.deb
 echo "Done installing NoMachine."
 
 # Setup SSH

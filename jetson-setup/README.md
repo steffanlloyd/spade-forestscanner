@@ -51,7 +51,7 @@ After running this script, you will need to reboot for the wifi drivers to come 
 
 Next, connect to wifi. Replace the line of code below with your own wifi SSID and password.
 ```bash
-nmcli device wifi connect 'WIFI_SSID' password 'WIFI_PASSWORD' ifname wlan0
+sudo nmcli device wifi connect 'WIFI_SSID' password 'WIFI_PASSWORD' ifname wlan0
 ```
 
 At this point, you should reconnect to your device over Wifi, if you're using ethernet. Subsequent steps will dedicate the port to the LiDAR.
