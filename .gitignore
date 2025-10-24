@@ -224,6 +224,7 @@ log/
 
 *.bag
 *.bag.zip
+*.zip
 
 # Emacs
 .#*

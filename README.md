@@ -41,6 +41,7 @@ Additionally, some scripts are defined to faciliate data collection:
 # Stops the recording
 ./scripts/record_stop.sh
 ```
+<<<<<<< HEAD
 These scripts will create rosbags named by the timestamp, stored in the `rosbags` directory.
 
 ## Using QGroundControl
@@ -75,3 +76,27 @@ The ros workspace has 3 packages:
 - `spade`: A custom SPADE folder, which just contains custom launch files for simplifing data collection.
     - `spade/launch/msg_MID360.launch`: Launches the LiDAR data acquisition.
     - `spade/launch/record.launch`: Launches the `msg_MID360` launch file, but also runs `mavros` to acquire the drone data, and creates a ROS bag in `/rosbags`.
+=======
+
+To trim a dataset:
+```bash
+rosbag info [bag].bag # Look at start and end time
+rosbag filter input.bag output.bag "t.secs > 1731660634 and t.secs < 1731661242"
+```
+
+To test FASTLIO, start up from NoMachine:
+```bash
+# Restart docker from Nomachine
+./scripts/docker_run.sh # press yes to restart
+./scripts/docker_connect.sh # connect to docker
+```
+Then, in the docker:
+```bash
+sis # source
+roslaunch spade mapping_mid360.launch
+```
+Then, replay the rosbag
+```bag
+rosbag play data.bag
+```
+>>>>>>> cf76509 (updates)
