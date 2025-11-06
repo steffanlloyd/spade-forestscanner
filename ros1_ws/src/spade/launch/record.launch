@@ -1,9 +1,25 @@
+<?xml version="1.0"?>
 <launch>
+<!-- override mavros PX4 device + baud -->
+<arg name="fcu_url" default="/dev/ttyUSB0:921600"/>
+ 
+  <include file="$(find mavros)/launch/px4.launch">
+<arg name="fcu_url" value="$(arg fcu_url)"/>
+</include>
+ 
+  <include file="$(find spade)/launch/msg_MID360.launch" />
+ 
+  <!-- rosbag node: pass only the args (don't repeat the executable name) -->
+<node name="record" pkg="rosbag" type="record" args="-a -o /home/ros/rosbags/bag" output="screen" />
+</launch>
 
-  <include file="$(find mavros)/launch/px4.launch" />
+ 
+<!-- <launch>
+
+  <include file="$(find mavros)/launch/px4.launch" args="fcu_url:=/dev/ttyUSB0:921600" />
 
   <include file="$(find spade)/launch/msg_MID360.launch" />
 
   <node name="record" pkg="rosbag" type="record" args="record -a -o /home/ros/rosbags/bag" output="screen" />
 
-</launch>
+</launch> -->
