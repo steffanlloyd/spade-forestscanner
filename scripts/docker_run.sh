@@ -13,6 +13,7 @@ if [ "$(docker ps -q -f name=forestscanner-ros1)" ]; then
             # Stop the Docker container
             echo "Stopping docker..."
             docker stop forestscanner-ros1
+            sleep 2
             echo "Done."
             ;;
         * )
@@ -38,5 +39,16 @@ docker run -itd \
   tail -f /dev/null
 
 echo "Done."
+sleep 1
 
 docker ps
+
+
+# Build inside the container with ROS environment
+echo "Running 'colcon build' inside the container to prepare workspace for usage. Please wait, building can take a couple of minutes."
+docker exec -u ros forestscanner-ros1 bash -lc "\
+  source /opt/ros/noetic/setup.bash && \
+  cd /home/ros && \
+  ./scripts/init.sh \
+"
+echo "Build finished. Docker container is ready to use."

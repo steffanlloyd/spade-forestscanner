@@ -12,6 +12,3 @@ $(dirname "$0")/docker_build.sh
 
 echo "Running docker"
 $(dirname "$0")/docker_run.sh
-
-echo "Building ros workspace"
-docker exec -it forestscanner-ros1 bash -c /home/ros/scripts/init.sh

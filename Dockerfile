@@ -1,19 +1,41 @@
-FROM tiryoh/ros-melodic-desktop
+# Use ROS Noetic on Ubuntu 20.04 (Focal)
+FROM ros:noetic-ros-base-focal
+
+# Tell everything which ROS distro we’re using
+ENV ROS_DISTRO=noetic
+
+
+# Install extra tools
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates \
+ && sed -i -E 's#http://(archive|security)\.ubuntu\.com#https://\1.ubuntu.com#g' /etc/apt/sources.list \
+ && printf 'Acquire::ForceIPv4 "true";\nAcquire::Retries "5";\n' >/etc/apt/apt.conf.d/99force-ipv4
 
 # Add extra programs
 RUN apt-get update && apt-get install -y --no-install-recommends \
     software-properties-common \
+    ros-dev-tools \
     i2c-tools \
     build-essential \
     libffi-dev \
+    libeigen3-dev \
     python3-pip \
     python3-dev \ 
     sudo \
     wget \
+    gdb \
     cmake \ 
-    ros-melodic-mavros \
-    ros-melodic-mavros-extras \
-    iproute2 inetutils-ping \
+    tree \
+    nano \
+    socat \
+    iproute2 \
+    inetutils-ping \
+    ros-${ROS_DISTRO}-mavros \
+    ros-${ROS_DISTRO}-mavros-extras \
+    ros-${ROS_DISTRO}-pcl-ros \
+    ros-${ROS_DISTRO}-pcl-conversions \
+    ros-${ROS_DISTRO}-rviz \
+    ros-${ROS_DISTRO}-rosbag \
+    python3-rosdep \
     && rm -rf /var/lib/apt/lists/*
 
 # Run geographiclib
@@ -30,7 +52,7 @@ RUN git clone https://github.com/Livox-SDK/Livox-SDK2.git
 WORKDIR /home/ros/libraries/Livox-SDK2/
 RUN mkdir build
 WORKDIR /home/ros/libraries/Livox-SDK2/build/
-RUN cmake .. && make && make install
+RUN cmake .. && make -j$(nproc) && make install
 WORKDIR /home/ros
 
 # Setup user. The USER_UID needs to match the user of the host computer! That way the files won't have access issues.
@@ -55,12 +77,6 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 RUN usermod -aG i2c ros
 RUN usermod -aG dialout ros
 RUN usermod -aG tty ros
-
-# Add more extra programs
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    nano \
-    tree \
-    && rm -rf /var/lib/apt/lists/*
 
 # Set the container's environment variables to enable rviz and others
 ENV QT_X11_NO_MITSHM=1

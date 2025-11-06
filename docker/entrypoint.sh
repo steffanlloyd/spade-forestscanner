@@ -2,8 +2,8 @@
 
 set -e
 
-if [ -f "/opt/ros/melodic/setup.bash" ]; then
-    source /opt/ros/melodic/setup.bash
+if [ -f "/opt/ros/noetic/setup.bash" ]; then
+    source /opt/ros/noetic/setup.bash
 fi
 
 if [ -f "/home/ros/ros1_ws/devel/setup.bash" ]; then
