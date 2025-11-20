@@ -5,7 +5,25 @@ timestamp=$(date +%Y%m%d%H%M%S)
 SESSION_NAME=ros_session
 LOG_DIR="$(dirname "$0")/../rosbags/logs"
 CONTAINER_NAME=forestscanner-ros1
+SERVICE_NAME=docker-run-forestscanner.service
 
+# Ensure the docker-run-forestscanner service has finished before starting
+SERVICE_NAME=docker-run-forestscanner.service
+SERVICE_STATUS=$(systemctl is-active "$SERVICE_NAME" 2>/dev/null || true)
+if [[ "$SERVICE_STATUS" == "active" || "$SERVICE_STATUS" == "activating" ]]; then
+    echo "Service $SERVICE_NAME is not finished yet (current state: $SERVICE_STATUS)."
+    echo "Aborting: wait for $SERVICE_NAME to finish before starting recording."
+    exit 1
+fi
+
+# Ensure there is no existing recording screen session
+if screen -list | grep -q "[.]${SESSION_NAME}[[:space:]]"; then
+    echo "A screen session named '${SESSION_NAME}' already exists."
+    echo "Aborting to avoid starting a duplicate recording session."
+    exit 1
+fi
+
+# Make log directory if it doesn't exist
 mkdir -p "$LOG_DIR"
 
 # Start roslaunch in a detached screen session
