@@ -4,7 +4,7 @@
 SCRIPT_DIR=$(dirname "$(realpath "$0")")
 
 # Define the source and destination paths
-SERVICE_FILE_SRC="$SCRIPT_DIR/../jetson-setup/setup-network.service.txt"
+SERVICE_FILE_SRC="$SCRIPT_DIR/../setup/setup-network.service.txt"
 SERVICE_FILE_DEST="/etc/systemd/system/setup-network.service"
 
 # Replace the {{{BASE PATH}}} placeholder with the script directory path
