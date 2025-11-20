@@ -16,5 +16,8 @@ chmod 600 ~/.ssh/authorized_keys
 chown -R spade:spade ~/.ssh
 
 echo "Building docker"
+$(dirname "$0")/remove_bloat_software.sh
 $(dirname "$0")/setup_remote_desktop.sh
 $(dirname "$0")/docker_install.sh
+
+echo "Done. Recommend rebooting!!"
