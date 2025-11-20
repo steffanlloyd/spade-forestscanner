@@ -1,21 +1,12 @@
 #!/bin/bash
-# This script sets a dedictated ip address on the ethernet port to 
-# ensure the Lidar can connect properly. It automatically runs
-# on startup via the /etc/rc.local mechanism.
 
-# Wait for the eth0 interface to become available, with a timeout of 10 seconds
-timeout=10
-while ! ip link show eth0 > /dev/null 2>&1; do
-    echo "Waiting for eth0 to be available"
-    sleep 1
-    ((timeout--))
-    if [ $timeout -eq 0 ]; then
-        echo "Timed out waiting for eth0 to become available"
-        exit 1
-    fi
-done
+# Make eth0 purely manual, with fixed LiDAR IP
+sudo nmcli connection modify eth0 ipv4.method manual ipv4.addresses "192.168.1.5/24" ipv4.gateway ""
 
-ip link set eth0 up
-ip addr add 192.168.1.5/24 dev eth0
-ip route add 192.168.1.0/24 dev eth0
-exit 0
+# Optional: ignore IPv6 on eth0 (to avoid noise)
+sudo nmcli connection modify eth0 ipv6.method ignore
+sudo nmcli connection modify eth0 connection.autoconnect yes
+
+# Bring it up
+sudo nmcli connection up eth0
+echo "Network setup complete: eth0 configured with static IP 192.168.1.5/24"

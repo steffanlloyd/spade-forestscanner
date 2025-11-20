@@ -223,6 +223,7 @@ log/
 *~
 
 *.bag
+*.bag.active
 *.bag.zip
 *.zip
 
