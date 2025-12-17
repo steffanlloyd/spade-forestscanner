@@ -8,10 +8,6 @@ CONTAINER_NAME=forestscanner-ros1
 SERVICE_NAME=docker-run-forestscanner.service
 
 # Ensure the docker-run-forestscanner service has finished before starting
-<<<<<<< HEAD
-SERVICE_NAME=docker-run-forestscanner.service
-=======
->>>>>>> e60b415 (Fix)
 SERVICE_STATUS=$(systemctl is-active "$SERVICE_NAME" 2>/dev/null || true)
 if [[ "$SERVICE_STATUS" == "active" || "$SERVICE_STATUS" == "activating" ]]; then
     echo "Service $SERVICE_NAME is not finished yet (current state: $SERVICE_STATUS)."
@@ -40,13 +36,6 @@ echo "Recording starting in background (screen session: $SESSION_NAME)..."
 REQUIRED_TOPICS=(
   "/livox/imu"
   "/livox/lidar"
-<<<<<<< HEAD
-  "/mavros/global_position/local"
-)
-
-TIMEOUT=20   # total time in seconds
-INTERVAL=2   # check every 2 seconds
-=======
   "/mavros/global_position/global"
 )
 
@@ -54,15 +43,10 @@ TIMEOUT=20        # total time in seconds for topic discovery
 INTERVAL=2        # check every 2 seconds
 MSG_TIMEOUT=5     # timeout per topic for message check
 
->>>>>>> e60b415 (Fix)
 START_TIME=$(date +%s)
 
 echo "Waiting for required topics to become available..."
 
-<<<<<<< HEAD
-
-=======
->>>>>>> e60b415 (Fix)
 while true; do
     NOW=$(date +%s)
     ELAPSED=$((NOW - START_TIME))
@@ -70,10 +54,6 @@ while true; do
     if (( ELAPSED >= TIMEOUT )); then
         echo "ERROR: Required topics did not appear within ${TIMEOUT}s."
         echo "Stopping screen session '$SESSION_NAME'."
-<<<<<<< HEAD
-        # Kill the screen session (and thus the roslaunch inside it)
-=======
->>>>>>> e60b415 (Fix)
         screen -S "$SESSION_NAME" -X quit || true
         exit 1
     fi
@@ -91,33 +71,18 @@ while true; do
 
     ALL_PRESENT=true
     for t in "${REQUIRED_TOPICS[@]}"; do
-<<<<<<< HEAD
-        if ! grep -q "^${t}\b" <<<"$TOPICS"; then
-=======
         if ! grep -q "^${t}\$" <<<"$TOPICS"; then
->>>>>>> e60b415 (Fix)
             ALL_PRESENT=false
             break
         fi
     done
 
     if $ALL_PRESENT; then
-<<<<<<< HEAD
-        echo "All required topics are active:"
-        for t in "${REQUIRED_TOPICS[@]}"; do
-            echo "  - $t"
-        done
-        echo "Recording confirmed running. Logs: $LOG_DIR/ros_output_$timestamp.log"
-=======
         echo "All required topics exist."
->>>>>>> e60b415 (Fix)
         break
     fi
 
     sleep "$INTERVAL"
-<<<<<<< HEAD
-done
-=======
 done
 
 # --------------------------------------------
@@ -162,4 +127,3 @@ for t in "${REQUIRED_TOPICS[@]}"; do
 done
 echo ""
 echo "Recording confirmed running. Logs: $LOG_DIR/ros_output_$timestamp.log"
->>>>>>> e60b415 (Fix)

@@ -5,27 +5,56 @@ ROS1 workspace for below-canopy drone.
 [Drone physical assembly and setup instructions here.](docs/DroneSetup.md)
 
 
-## To install repository
+## Setup
+The steps below describe the setup of the SPADE drone. Note, this is already done if you ahve recieved the drone from SDU or NIBIO.
+
+### Repository cloning
 ```bash
 git clone --recurse-submodules git@github.com:steffanlloyd/spade-forestscanner.git
-
-# Build docker and make workspace
-./scripts/init.sh
 ```
-After this, you should be able to just call `catkin_make` normally.
-
 If you cloned it without the `--recurse-submodules` tag, you can fix with
 ```bash
 git submodule update --init --recursive
 ```
 
-A few scripts are defined to facilitate usage of the dockerfile.
+### Computer Setup
+To set up a raspberry pi for use, run the script. This script expects the Raspi to be installed with Ubuntu 24.04.
+```
+./scripts/raspi_setup.sh
+```
+This will:
+ - Set up remote desktop with NoMachine
+ - Set up SSH
+ - Install docker
+ - Remove bloatware in the install
+
+You should now connect to the Raspberry Pi to wifi either through remote access or command line. The next step will dedicate the ethernet port to the LiDAR and it will not be possible to connect to the internet through it afterwards. Once complete, run:
 ```bash
-./scripts/docker_build.sh # build the dockerfile
+./scripts/setup_remote_desktop.sh
+```
+
+To complete the setup of the LiDAR, you need to modify the IP address in the config file to match your sensor. Open `ros1_ws/src/spade/config/MID360_config.json`, then edit line 28, LiDAR ip address:
+```
+      "ip" : "192.168.1.1XX",
+```
+Change the last two digits of the IP address to match the last two digits of the serial number on the LiDAR.
+
+### Docker setup
+To set up the docker, just build it with the pre-made script:
+```bash
+./scripts/docker_build.sh
+```
+There are several scripts to help work with the docker:
+```bash
 ./scripts/docker_run.sh # run the dockerfile
 ./scripts/docker_stop.sh # stop the dockerfile
 ./scripts/docker_connect.sh # connect the dockerfile
 ```
+However, the most convenient method is to install a service on the machine to start the docker on the computers at startup. This avoids needing to manually start the docker in the field. This can be accomplished by running the script:
+```bash
+./scripts/setup_docker_at_startup.sh
+```
+After running this script, a service called `docker-run-forestscanner` will be installed and cause the docker to run at startup.
 
 ## Initiating data collection
 If you have read the QAV guide produced by SDU, you do NOT need to configure the LiDAR ethernet. This is done automatically in this repository by running the scripts `./scripts/setup_networks.sh`. You don't even need to run this script even: it is set up to run on boot via the `/etc/rc.local` mechanism.
@@ -67,7 +96,6 @@ If you need to reflash the Jetson (to install a new version, or if you break it)
 The docker images contains the following folders:
 - `ros1_ws`: The ros workspace
 - `rosbags`: When you run the `record_start.sh` and `record_stop.sh` scripts, rosbags will be stored here.
-- `libraries`: Stores the Livox SDK2 folder, and any others that might be added.
 
 The ros workspace has 3 packages:
 - `livox_ros_driver2`: The Livox sensor driver
