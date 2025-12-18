@@ -48,6 +48,8 @@ A sample battery is:
 
 ![Battery](battery.jpg)
 
+You will also need to buy batteries for the three remote controls. The batteries required are here: [https://radiomasterrc.com/products/18650-3200mah-3-7v-battery-2pcs-for-tx16s-boxer-tx12-mt12-radios](https://radiomasterrc.com/products/18650-3200mah-3-7v-battery-2pcs-for-tx16s-boxer-tx12-mt12-radios). They can be purchased through a number of retailers.
+
 ## Remotes and telemetry
 
 The telemetry modules and remotes are included. Each is labelled as "1", "2", or "3" depending on which swarm drone it is paired with.
